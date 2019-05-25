@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DT1HackerMode</string>
+    <string name="mfAmLabel">DeathGame</string>
+    <string name="amEtYOD">Set the Year of Death</string>
+    <string name="amEtGuess">Guess the year of Death</string>
+    <string name="amBtnSet">Set</string>
+    <string name="amBtnEnter">Guess</string>
+    <string name="preference_key">com.example.dt1hackermode.PREFERNCE_KEY</string>
+    <string name="correctguess_key">com.example.dt1hackermode.CORRECTGUESS_KEY</string>
+    <string name="wrongguess_key">com.example.dt1hackermode.WRONGGUESS_KEY</string>
+</resources>
