@@ -14,16 +14,23 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText etYOD, etGuess;
     private TextView tvCorrectGuess, tvWrongGuess;
-    int noOfCorrectGuess=0, noOfWrongGuess=0, YOD=0;
-    String C= "No. of Correct Guess : ", W= "No. of Wrong Guess : ";
+    private int noOfCorrectGuess=0, noOfWrongGuess=0, YOD=0;
+    private String C= "No. of Correct Guess : ", W= "No. of Wrong Guess : ";
+    View root;
     Context context= MainActivity.this;
-    SharedPreferences values= context.getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE);
+    android.content.res.Resources res = getResources();
+    private SharedPreferences values= context.getSharedPreferences(res.getString(R.string.preference_key), Context.MODE_PRIVATE);
+    //private SharedPreferences values= this.getPreferences(Context.MODE_PRIVATE);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        View layout;
+        layout= findViewById(R.id.layout);
+        root= layout.getRootView();
         etGuess= findViewById(R.id.etGuess);
         etYOD= findViewById(R.id.etYOD);
         tvCorrectGuess= findViewById(R.id.tvCorrectGuess);
@@ -39,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences.Editor editor= values.edit();
+        /*SharedPreferences.Editor editor= values.edit();
         editor.putInt(getString(R.string.correctguess_key), noOfCorrectGuess);
         editor.putInt(getString(R.string.wrongguess_key), noOfWrongGuess);
-        editor.apply();
+        editor.apply();*/
     }
 
     private void setToast(String s) {
@@ -65,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             if(G>255)
                 G=255;
             Color = (A & 0xff) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (B & 0xff);
-            getWindow().getDecorView().setBackgroundColor(Color);
+            root.setBackgroundColor(Color);
 
         }
         else if (Guess-Set<0) {
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             if(G>255)
                 G=255;
             Color = (A & 0xff) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (B & 0xff);
-            getWindow().getDecorView().setBackgroundColor(Color);
+            root.setBackgroundColor(Color);
         }
         else {
             setToast("Correct Guess");
@@ -86,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             tvCorrectGuess.setText(C+noOfCorrectGuess);
             G=255;
             Color = (A & 0xff) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (B & 0xff);
-            getWindow().getDecorView().setBackgroundColor(Color);
+            root.setBackgroundColor(Color);
         }
     }
 
