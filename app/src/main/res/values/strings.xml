@@ -8,4 +8,6 @@
     <string name="preference_key">com.example.dt1hackermode.PREFERNCE_KEY</string>
     <string name="correctguess_key">com.example.dt1hackermode.CORRECTGUESS_KEY</string>
     <string name="wrongguess_key">com.example.dt1hackermode.WRONGGUESS_KEY</string>
+    <string name="amTvCorrectGuess">No. of Correct Guesses : 0</string>
+    <string name="amTvWrongGuess">No. of Wrong Guesses : 0</string>
 </resources>
