@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
     private int noOfCorrectGuess=0, noOfWrongGuess=0, YOD=0;
     private String C= "No. of Correct Guess : ", W= "No. of Wrong Guess : ";
     View root;
-    Context context= MainActivity.this;
-    android.content.res.Resources res = getResources();
-    private SharedPreferences values= context.getSharedPreferences(res.getString(R.string.preference_key), Context.MODE_PRIVATE);
+    //Context context= MainActivity.this;
+    //android.content.res.Resources res = getResources();
+    //private SharedPreferences values= context.getSharedPreferences(res.getString(R.string.preference_key), Context.MODE_PRIVATE);
     //private SharedPreferences values= this.getPreferences(Context.MODE_PRIVATE);
 
 
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         View layout;
+        Configuration conf = getResources().getConfiguration();
+        boolean isLandscape =(conf.orientation==Configuration.ORIENTATION_LANDSCAPE);
         layout= findViewById(R.id.layout);
         root= layout.getRootView();
         etGuess= findViewById(R.id.etGuess);
@@ -36,8 +39,14 @@ public class MainActivity extends AppCompatActivity {
         tvCorrectGuess= findViewById(R.id.tvCorrectGuess);
         tvWrongGuess= findViewById(R.id.tvWrongGuess);
 
-        noOfCorrectGuess= values.getInt(getString(R.string.correctguess_key),0);
-        noOfWrongGuess= values.getInt(getString(R.string.wrongguess_key), 0);
+        if (isLandscape)
+            root.setBackgroundResource(R.drawable.ryuk_landscape);
+
+        else
+            root.setBackgroundResource(R.drawable.ryuk);
+
+        //noOfCorrectGuess= values.getInt(getString(R.string.correctguess_key),0);
+        //noOfWrongGuess= values.getInt(getString(R.string.wrongguess_key), 0);
 
         tvWrongGuess.setText(W+noOfWrongGuess);
         tvCorrectGuess.setText(C+noOfCorrectGuess);
@@ -67,10 +76,12 @@ public class MainActivity extends AppCompatActivity {
             setToast("Guess is higher");
             noOfWrongGuess++;
             tvWrongGuess.setText(W+noOfWrongGuess);
-            R= 2*(Guess-Set);
-            G=255-(20*(Guess-Set));
-            if(G>255)
-                G=255;
+            R= 10*(Guess-Set);
+            if(R>255)
+                R=255;
+            G=255-(10*(Guess-Set));
+            if(G<0)
+                G=0;
             Color = (A & 0xff) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (B & 0xff);
             root.setBackgroundColor(Color);
 
@@ -79,10 +90,12 @@ public class MainActivity extends AppCompatActivity {
             setToast("Guess is lower");
             noOfWrongGuess++;
             tvWrongGuess.setText(W+noOfWrongGuess);
-            R= 2*(Set-Guess);
-            G=255-(20*(Guess-Set));
-            if(G>255)
-                G=255;
+            R= 10*(Set-Guess);
+            if(R>255)
+                R=255;
+            G=255-(10*(Guess-Set));
+            if(G<0)
+                G=0;
             Color = (A & 0xff) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (B & 0xff);
             root.setBackgroundColor(Color);
         }
@@ -126,8 +139,12 @@ public class MainActivity extends AppCompatActivity {
                 etGuess.getText().clear();
                 setToast("Guess age from 1-100");
             } else {
+                int Blue=0xFF03A9F4;
                 int Guess = Integer.parseInt(etGuess.getText().toString());
+
                 etGuess.getText().clear();
+                tvCorrectGuess.setTextColor(Blue);
+                tvWrongGuess.setTextColor(Blue);
                 Calculate(YOD, Guess);
             }
         }
