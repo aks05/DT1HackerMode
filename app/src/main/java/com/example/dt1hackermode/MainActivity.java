@@ -18,17 +18,13 @@ public class MainActivity extends AppCompatActivity {
     private int noOfCorrectGuess=0, noOfWrongGuess=0, YOD=0;
     private String C= "No. of Correct Guess : ", W= "No. of Wrong Guess : ";
     View root;
-    //Context context= MainActivity.this;
-    //android.content.res.Resources res = getResources();
-    //private SharedPreferences values= context.getSharedPreferences(res.getString(R.string.preference_key), Context.MODE_PRIVATE);
-    //private SharedPreferences values= this.getPreferences(Context.MODE_PRIVATE);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences sharedPref= getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE);
         View layout;
         Configuration conf = getResources().getConfiguration();
         boolean isLandscape =(conf.orientation==Configuration.ORIENTATION_LANDSCAPE);
@@ -45,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
         else
             root.setBackgroundResource(R.drawable.ryuk);
 
-        //noOfCorrectGuess= values.getInt(getString(R.string.correctguess_key),0);
-        //noOfWrongGuess= values.getInt(getString(R.string.wrongguess_key), 0);
+        noOfCorrectGuess= sharedPref.getInt(getString(R.string.correctguess_key),0);
+        noOfWrongGuess= sharedPref.getInt(getString(R.string.wrongguess_key), 0);
+        YOD= sharedPref.getInt(getString(R.string.yod_key), 0);
 
         tvWrongGuess.setText(W+noOfWrongGuess);
         tvCorrectGuess.setText(C+noOfCorrectGuess);
@@ -55,10 +52,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        /*SharedPreferences.Editor editor= values.edit();
+
+        SharedPreferences sharedPref= getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedPref.edit();
+
         editor.putInt(getString(R.string.correctguess_key), noOfCorrectGuess);
         editor.putInt(getString(R.string.wrongguess_key), noOfWrongGuess);
-        editor.apply();*/
+        editor.putInt(getString(R.string.yod_key), YOD);
+        
+        editor.apply();
     }
 
     private void setToast(String s) {
