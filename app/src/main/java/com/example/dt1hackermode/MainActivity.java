@@ -120,10 +120,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Set(View view) {
-        setBackground();
+        if (etYOD.getText().length()==0) {
+            if( YOD==0) {
+                setToast("Set the year of Death");
+                setBackground();
+            }
 
-        if(etYOD.getText().length()==0) {
-            setToast("Set the year of Death");
+            else
+                setToast("Year of Death is already set\nEnter valid no. to reset");
         }
 
         else if (Integer.parseInt(etYOD.getText().toString())>100 || Integer.parseInt(etYOD.getText().toString())==0 ) {
@@ -134,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         else {
             YOD=Integer.parseInt(etYOD.getText().toString());
             etYOD.getText().clear();
+            setBackground();
             setToast("Successfully set. Now Guess can be made");
         }
     }

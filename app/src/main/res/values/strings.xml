@@ -10,5 +10,5 @@
     <string name="wrongguess_key">com.example.dt1hackermode.WRONGGUESS_KEY</string>
     <string name="amTvCorrectGuess">No. of Correct Guesses : 0</string>
     <string name="amTvWrongGuess">No. of Wrong Guesses : 0</string>
-    <string name="yod_key">com.example.DT1</string>
+    <string name="yod_key">com.example.dt1hackermode.YOD_key</string>
 </resources>
