@@ -25,26 +25,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPref= getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE);
-        View layout;
-        Configuration conf = getResources().getConfiguration();
-        boolean isLandscape =(conf.orientation==Configuration.ORIENTATION_LANDSCAPE);
-        layout= findViewById(R.id.layout);
-        root= layout.getRootView();
+
         etGuess= findViewById(R.id.etGuess);
         etYOD= findViewById(R.id.etYOD);
         tvCorrectGuess= findViewById(R.id.tvCorrectGuess);
         tvWrongGuess= findViewById(R.id.tvWrongGuess);
 
-        if (isLandscape)
-            root.setBackgroundResource(R.drawable.ryuk_landscape);
-
-        else
-            root.setBackgroundResource(R.drawable.ryuk);
-
         noOfCorrectGuess= sharedPref.getInt(getString(R.string.correctguess_key),0);
         noOfWrongGuess= sharedPref.getInt(getString(R.string.wrongguess_key), 0);
         YOD= sharedPref.getInt(getString(R.string.yod_key), 0);
 
+        setBackground();
         tvWrongGuess.setText(W+noOfWrongGuess);
         tvCorrectGuess.setText(C+noOfCorrectGuess);
     }
@@ -59,8 +50,24 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt(getString(R.string.correctguess_key), noOfCorrectGuess);
         editor.putInt(getString(R.string.wrongguess_key), noOfWrongGuess);
         editor.putInt(getString(R.string.yod_key), YOD);
-        
+
         editor.apply();
+    }
+
+    private void setBackground () {
+        View layout;
+        layout= findViewById(R.id.layout);
+        root= layout.getRootView();
+        Configuration conf = getResources().getConfiguration();
+        boolean isLandscape =(conf.orientation==Configuration.ORIENTATION_LANDSCAPE);
+
+        if (isLandscape)
+            root.setBackgroundResource(R.drawable.ryuk_landscape);
+
+        else
+            root.setBackgroundResource(R.drawable.ryuk);
+
+
     }
 
     private void setToast(String s) {
@@ -95,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             R= 10*(Set-Guess);
             if(R>255)
                 R=255;
-            G=255-(10*(Guess-Set));
+            G=255-(10*(Set-Guess));
             if(G<0)
                 G=0;
             Color = (A & 0xff) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (B & 0xff);
@@ -113,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Set(View view) {
+        setBackground();
+
         if(etYOD.getText().length()==0) {
             setToast("Set the year of Death");
         }
